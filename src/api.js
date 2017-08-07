@@ -21,7 +21,7 @@ class Api {
     .delete(`${API_HOST}/auth/sessions`)
     .set('Authorization', `token ${token}`)
   )
-  
+
   getUserInfo = (token) => (
     superagent
     .get(`${API_HOST}/auth/me`)

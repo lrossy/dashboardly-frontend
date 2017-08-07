@@ -6,31 +6,44 @@ import './Menu.css';
 
 
 class Menu extends Component {
-  
+  constructor(props){
+      super(props);
+      this.state = {
+
+      };
+  }
   handleClickOutside = () => {
     this.props.closeMenu();
   }
+    componentDidMount() {
+        this._fetchUserInfo();
+    }
 
-    _getUserInfo = () => {
+    _fetchUserInfo = () => {
         // deep destructuring equivalent to (let email = this.refs.email.value;)
         if (auth.isLoggedIn()) {
             auth.userInfo()
-                .then(res => this.props.router.push('/'))
+                .then(res => {
+                    this.setState({ user: res })
+                })
                 .catch(console.error)
         }
         else {
             this.setState({ error: "Please enter an email and password"})
         }
-    }
+    };
 
   render() {
-    let { closeMenu, show } = this.props
-    const isLoggedIn = auth.isLoggedIn()
+    let { closeMenu, show } = this.props;
+    const isLoggedIn = auth.isLoggedIn();
+      console.log('ddd', this.state.user)
     return (
       <div className={`menu ${show?"show":""}`}>
 
         <div className="menu__header">
-          <img src="" alt="profile-pic" className="menu__avatar"/>
+            {(isLoggedIn && this.state.user) ?
+                <img src={this.state.user.avatarUrl} alt="profile-pic" className="menu__avatar"/>
+                    :  <img src="" alt="profile-pic" className="menu__avatar"/>}
         </div>
 
         <div className="menu__list">

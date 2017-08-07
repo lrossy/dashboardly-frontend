@@ -33,7 +33,8 @@ module.exports = {
   },
   userInfo() {
     return api.getUserInfo(localStorage.token)
-        .then(res => {console.log('res.body', res.body);
+        .then(res => {
+          //console.log('res.body', res.body);
           return res.body})
   },
   isLoggedIn() {

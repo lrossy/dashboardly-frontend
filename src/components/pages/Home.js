@@ -19,7 +19,6 @@ export default class Home extends Component {
   }
   
   _fetchBoards = () => {
-    console.log('_fetchBoards', this.state.boards)
 
     api.getBoardsList()
     .then(res => {
