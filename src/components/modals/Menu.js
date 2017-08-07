@@ -11,6 +11,18 @@ class Menu extends Component {
     this.props.closeMenu();
   }
 
+    _getUserInfo = () => {
+        // deep destructuring equivalent to (let email = this.refs.email.value;)
+        if (auth.isLoggedIn()) {
+            auth.userInfo()
+                .then(res => this.props.router.push('/'))
+                .catch(console.error)
+        }
+        else {
+            this.setState({ error: "Please enter an email and password"})
+        }
+    }
+
   render() {
     let { closeMenu, show } = this.props
     const isLoggedIn = auth.isLoggedIn()

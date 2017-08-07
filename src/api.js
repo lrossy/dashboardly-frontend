@@ -8,10 +8,23 @@ class Api {
     .post(`${API_HOST}/auth/sessions`)
     .send({ email, password })
   )
-  
+
+  requestSignup = (email, password) => (
+      superagent
+          .post(`${API_HOST}/auth/users`)
+          .send({ email, password })
+          .set('Accept', 'application/json')
+  )
+
   requestLogout = (token) => (
     superagent
     .delete(`${API_HOST}/auth/sessions`)
+    .set('Authorization', `token ${token}`)
+  )
+  
+  getUserInfo = (token) => (
+    superagent
+    .get(`${API_HOST}/auth/me`)
     .set('Authorization', `token ${token}`)
   )
   

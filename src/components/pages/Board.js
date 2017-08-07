@@ -28,7 +28,7 @@ export default class Board extends Component {
         this.setState({
           title: res[0].body.title,
           description: res[0].body.description,
-          bookmarks: res[1].body.bookmarks
+          bookmarks: res[1].body
         })
       })
       .catch(console.error)

@@ -15,19 +15,21 @@ export default class Home extends Component {
   }
   
   componentDidMount() {
-    this._fetchBoards();
+   this._fetchBoards();
   }
   
   _fetchBoards = () => {
+    console.log('_fetchBoards', this.state.boards)
+
     api.getBoardsList()
     .then(res => {
-      this.setState({ boards: res.body.boards })
+      this.setState({ boards: res.body })
     })
     .catch(console.error)
   }
 
   render() {
-    let { boards } = this.state
+    let { boards } = this.state;
     return (
       <div className="home">
         { boards.map(b =>
