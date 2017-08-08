@@ -49,6 +49,12 @@ class Api {
           .send(board)
           .set('Authorization', `token ${token}`)
   );
+  createBookmark = (token, boardId, bookmark) => (
+      superagent
+          .post(`${API_HOST}/boards/${boardId}/bookmarks`)
+          .send(bookmark)
+          .set('Authorization', `token ${token}`)
+  );
   
 }
 

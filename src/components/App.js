@@ -12,15 +12,12 @@ class App extends Component {
         modalIsOpen: false,
         user: {}
     };
-      console.log('constructor', this.state)
-
   }
     componentWillMount() {
         this._fetchUserInfo();
     }
 
     _fetchUserInfo = () => {
-        console.log('_fetchUserInfo');
         if (auth.isLoggedIn()) {
             auth.userInfo()
                 .then(res => {
