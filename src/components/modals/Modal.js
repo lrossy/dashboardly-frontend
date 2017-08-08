@@ -20,7 +20,7 @@ export default class Modal extends Component {
     }
 
     close(e) {
-        e.preventDefault();
+        e.preventDefault()
 
         if (this.props.onClose) {
             this.props.onClose()

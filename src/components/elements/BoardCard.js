@@ -6,10 +6,16 @@ export default class BoardCard extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+
   }
+  _handleEdit = (e) => {
+    e.preventDefault();
+    this.props.clickHandler(this.props.board);
+  };
 
   render() {
-    let { title, description, id } = this.props;
+    let { title, description, id, ownerId } = this.props.board;
+
     return (
 
         <Link to={`/boards/${id}`}>
@@ -20,6 +26,9 @@ export default class BoardCard extends Component {
             <div className="board-card-info">
               <h2>{ title }</h2>
               <p>{ description }</p>
+            </div>
+            <div className="editRow">
+              {ownerId === this.props.user.users_id ? <span onClick={this._handleEdit}>Edit</span> : null}
             </div>
           </div>
         </Link>

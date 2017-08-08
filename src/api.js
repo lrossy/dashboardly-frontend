@@ -19,6 +19,7 @@ class Api {
   requestLogout = (token) => (
     superagent
     .delete(`${API_HOST}/auth/sessions`)
+    .send({token: token})
     .set('Authorization', `token ${token}`)
   );
 
@@ -46,6 +47,12 @@ class Api {
   createBoard = (token, board) => (
       superagent
           .post(`${API_HOST}/boards`)
+          .send(board)
+          .set('Authorization', `token ${token}`)
+  );
+  editBoard = (token, board, boardId) => (
+      superagent
+          .patch(`${API_HOST}/boards/${boardId}`)
           .send(board)
           .set('Authorization', `token ${token}`)
   );

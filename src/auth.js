@@ -9,6 +9,8 @@ module.exports = {
     else {
       return api.requestLogin(email, pass)
       .then(res => localStorage.token = res.body.token)
+      .then(res => api.getUserInfo(localStorage.token))
+      .then(res => localStorage.user = JSON.stringify(res.body))
       .catch((error) => {return error.response.body })
     }
   },
@@ -36,13 +38,21 @@ module.exports = {
   userInfo() {
     if(localStorage.token){
       return api.getUserInfo(localStorage.token)
-          .then(res => {
-            //console.log('res.body', res.body);
-            return res.body})
+          .then(res => res.body)
     }
+
   },
   isLoggedIn() {
     return !!localStorage.token
   },
-  
+  getUser() {
+    if(localStorage.user){
+      try {
+        let user = JSON.parse(localStorage.user);
+        return user;
+      } catch(e) {
+        console.error('could not parse logged in user');
+      }
+    }
+  }
 }

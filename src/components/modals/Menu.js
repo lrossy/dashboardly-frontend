@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
+
 import onClickOutside from 'react-onclickoutside';
 import auth from '../../auth';
 import './Menu.css';
@@ -9,13 +11,23 @@ class Menu extends Component {
   constructor(props){
       super(props);
       this.state = {
-
       };
   }
   handleClickOutside = () => {
     this.props.closeMenu();
-  }
+  };
 
+    logout = () => {
+
+        this.props.closeMenu();
+
+        return auth.logout()
+            .then(() => {
+                console.log('loggedout');
+                this.props.closeMenu();
+                browserHistory.push(`/`);
+            })
+    };
 
   render() {
     let { closeMenu, show } = this.props;
@@ -48,9 +60,9 @@ class Menu extends Component {
           : null}
 
           {isLoggedIn ?
-            <Link to="/logout" className="menu__item" onClick={closeMenu}>
+            <div onClick={this.logout} className="menu__item">
               Logout
-            </Link>
+            </div>
           : null}
         </div>
 

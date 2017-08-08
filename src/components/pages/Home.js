@@ -17,15 +17,20 @@ export default class Home extends Component {
         boards: [],
         isModalOpen: false,
         modal_remaining: 80,
-        modal_current: 0
+        modal_current: 0,
+        user: {},
+        editBoard: {},
+        newboard: true
     };
   }
     openModal = () => this.setState({isModalOpen: true});
 
-    closeModal = () => this.setState({isModalOpen: false});
+
+    closeModal = () => this.setState({isModalOpen: false, editBoard: {}, newboard: true});
 
     componentDidMount() {
         this._fetchBoards();
+        this.setState({ user: auth.getUser() })
     }
   
     _fetchBoards = () => {
@@ -37,25 +42,32 @@ export default class Home extends Component {
         .catch(console.error)
     };
 
+    editBoard = (board) => {
+        this.setState({
+            editBoard: board,
+            isModalOpen: true,
+            newboard: false
+        })
+    };
+
     render() {
 
-        let { boards } = this.state;
+        let { boards, user } = this.state;
         return (
           <div className="home">
             { boards.map((b,i) =>
               {
                 return <BoardCard
                     key={b.id}
-                    id={b.id}
-                    title={b.title}
-                    description={b.description}
-                    updatedAt={b.updatedAt}
+                    user={user}
+                    board={b}
+                    clickHandler={this.editBoard}
                 />
               }
             )}
               <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()} backdropClassName="backdrop"
                      className="modal">
-                  <CreateBoard />
+                  <CreateBoard board={this.state.editBoard} newboard={this.state.newboard} onClose={() => this.closeModal()}/>
               </Modal>
             {auth.isLoggedIn() ? <AddButton clickHandler={this.openModal}/> : null}
           </div>
