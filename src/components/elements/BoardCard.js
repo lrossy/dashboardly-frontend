@@ -9,14 +9,22 @@ export default class BoardCard extends Component {
   }
 
   render() {
-    let { title, description, id } = this.props
+    let { title, description, id, className } = this.props
     return (
-      <Link to={`/boards/${id}`}>
-        <div className="board-card">
-          <h2>{ title }</h2>
-          <p>{ description }</p>
-        </div>
-      </Link>
+      <li>
+        <Link to={`/boards/${id}`}>
+          <div className="board-card">
+            <div className="board-card-img">
+              <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?r=pg"/>
+            </div>
+            <div className="board-card-info">
+              <h2>{ title }</h2>
+              <p>{ description }</p>
+            </div>
+          </div>
+        </Link>
+      </li>
+
     );
   }
 

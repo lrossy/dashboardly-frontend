@@ -1,0 +1,12 @@
+.board-card > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.board-card-info {
+    width: 250px;
+    padding: 0 0 0 10px;
+}
+.board-card-img{
+    width: 80px
+}

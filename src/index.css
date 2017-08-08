@@ -1,5 +1,79 @@
+/* Box-sizing fix! */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+ul.block-grid {
+  display: flex; /* display elements next to each other */
+  flex-wrap: wrap;
+  list-style: none; /* disable bullets on the LI items */
+  padding-left: 0; /* reset the browser extra padding on UL elements */
+
+}
+
+ul.block-grid li {
+  padding: 5px; /* Adding a 10px padding on a 100% width would not work if it wasn't for box-sizing: border-box! */
+}
+ul.block-grid-small-1 > li {
+  width: 100%;
+}
+ul.block-grid-small-2 > li {
+  width: 50%;
+}
+ul.block-grid-small-3 > li {
+  width: 33.333%;
+}
+ul.block-grid-small-4 > li {
+  width: 25%;
+}
+.block-grid-small-5 > li {
+  width: 20%;
+}
+.block-grid-small-6 > li {
+  width: 16.666%;
+}
+
+/* Medium and up screen sizes */
+@media only screen and (min-width: 641px) {
+  ul.block-grid-medium-2 > li {
+    width: 50%;
+  }
+  ul.block-grid-medium-3 > li {
+    width: 33.333%;
+  }
+  ul.block-grid-medium-4 > li {
+    width: 25%;
+  }
+  .block-grid-medium-5 > li {
+    width: 20%;
+  }
+  .block-grid-medium-6 > li {
+    width: 16.666%;
+  }
+}
+
+/* Large screen sizes */
+@media only screen and (min-width: 1025px) {
+  ul.block-grid-large-2 > li {
+    width: 50%;
+  }
+  ul.block-grid-large-3 > li {
+    width: 33.333%;
+  }
+  ul.block-grid-large-4 > li {
+    width: 25%;
+  }
+  .block-grid-large-5 > li {
+    width: 20%;
+  }
+  .block-grid-large-6 > li {
+    width: 16.666%;
+  }
 }

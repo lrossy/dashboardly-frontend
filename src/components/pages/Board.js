@@ -38,15 +38,19 @@ export default class Board extends Component {
     let { bookmarks } = this.state
     return (
       <div className="board">
-        { bookmarks.map(b =>
-          <BookmarkCard
-            key={b.id}
-            id={b.id}
-            title={b.title}
-            description={b.description}
-            url={b.url}
-          />
+        <ul className="block-grid block-grid-small-1 block-grid-medium-3">
+        { bookmarks.map( b =>
+          {
+            return <BookmarkCard
+                key={b.id}
+                id={b.id}
+                title={b.title}
+                description={b.description}
+                url={b.url}
+            />
+          }
         )}
+        </ul>
       </div>
     );
   }
