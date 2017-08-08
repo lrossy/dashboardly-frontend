@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { withRouter } from 'react-router'
+// import { withRouter } from 'react-router'
 import auth from '../../auth'
 import './SignUp.css';
 
 const ENTER = 13;
 
 
-class SignUp extends Component {
+export default class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,4 +72,4 @@ class SignUp extends Component {
 
 }
 
-export default withRouter(SignUp)
+// export default withRouter(SignUp)

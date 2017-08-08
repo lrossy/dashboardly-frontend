@@ -5,14 +5,17 @@ import './App.css';
 
 class App extends Component {
   constructor(props) {
-    super(props)
-    this.state = { isMenuOpen: false }
+    super(props);
+    this.state = {
+        isMenuOpen: false,
+        modalIsOpen: false
+    };
   }
-  
-  closeMenu = () => this.setState({ isMenuOpen: false })
+
+  closeMenu = () => this.setState({ isMenuOpen: false });
   
   render() {
-    let {isMenuOpen} = this.state
+    let {isMenuOpen} = this.state;
     return (
       <div className="App">
         <div className="App-navbar">

@@ -15,11 +15,12 @@ class Menu extends Component {
   handleClickOutside = () => {
     this.props.closeMenu();
   }
-    componentDidMount() {
+    componentWillMount() {
         this._fetchUserInfo();
     }
 
     _fetchUserInfo = () => {
+        console.log('here')
         // deep destructuring equivalent to (let email = this.refs.email.value;)
         if (auth.isLoggedIn()) {
             auth.userInfo()
@@ -36,7 +37,6 @@ class Menu extends Component {
   render() {
     let { closeMenu, show } = this.props;
     const isLoggedIn = auth.isLoggedIn();
-      console.log('ddd', this.state.user)
     return (
       <div className={`menu ${show?"show":""}`}>
 

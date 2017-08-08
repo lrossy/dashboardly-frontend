@@ -11,12 +11,14 @@ export default class BookmarkCard extends Component {
     let { title, description, url } = this.props;
     return (
         <li>
-          <a className="bookmark-card" href={url}>
-            <div>
-              <h2>{ title }</h2>
-              <p>{ description }</p>
-            </div>
-            <img src={""} alt={title}/>
+          <a href={url}>
+              <div className="bookmark-card">
+                  <div>
+                      <h2>{ title }</h2>
+                      <p>{ description }</p>
+                  </div>
+                  <img src={""} alt={title}/>
+              </div>
           </a>
         </li>
     );
