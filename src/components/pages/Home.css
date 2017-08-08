@@ -10,3 +10,7 @@
 .board-card-img{
     width: 80px
 }
+.remaining {
+    text-align: right;
+    color: #9ca7b1;
+}

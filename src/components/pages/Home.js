@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { browserHistory } from 'react-router';
 import Modal from 'react-modal';
 import api from '../../api';
 import BoardCard from '../elements/BoardCard';
@@ -22,7 +23,9 @@ export default class Home extends Component {
     super(props);
     this.state = {
         boards: [],
-        modalIsOpen: false
+        modalIsOpen: false,
+        modal_remaining: 80,
+        modal_current: 0
     };
 
       this.openModal = this.openModal.bind(this);
@@ -60,18 +63,30 @@ export default class Home extends Component {
             title: this.refs.title.value,
             description: this.refs.description.value
         };
-        console.log('_handleSubmit', board, localStorage.token);
+        // console.log('_handleSubmit', board, localStorage.token);
 
         api.createBoard(localStorage.token, board)
             .then(res => {
-                let newBoards = this.state.boards.concat(res.body);
-
-                this.setState({ boards: newBoards });
+                // let newBoards = this.state.boards.concat(res.body);
                 this.closeModal();
+                // this.setState({ boards: newBoards });
+                browserHistory.push(`/boards/${res.body[0].id}`);
+
             })
             .catch(console.error);
         // this.props.onSearch(this.refs.userInput.value);
     };
+
+    _handleTyping = (e) => {
+        if(e.target.value.length <= this.state.modal_remaining){
+            this.setState({ modal_current: e.target.value.length })
+        }
+        else{
+            e.target.value = e.target.value.slice(0,80);
+            this.setState({ modal_current: e.target.value.length })
+        }
+    };
+
     render() {
 
         let { boards } = this.state;
@@ -100,9 +115,10 @@ export default class Home extends Component {
                           <input type="text" placeholder="Title" ref="title"/>
                       </div>
                       <div>
-                          <textarea cols="20" rows="10" ref="description"/>
+                          <textarea cols="20" rows="10" ref="description" onKeyUp={this._handleTyping}/>
                       </div>
                   </form>
+                  <div className="remaining">{this.state.modal_current}/{this.state.modal_remaining}</div>
                   <button onClick={this.closeModal}>close</button>
                   <button onClick={this._handleSubmit}>Create</button>
               </Modal>

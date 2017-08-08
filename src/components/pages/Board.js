@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import api from '../../api';
 import BookmarkCard from '../elements/BookmarkCard';
 import auth from '../../auth';
+import AddButton from '../elements/AddButton';
+import CreateBookmark from '../modals/CreateBookmark';
+import Modal from '../modals/Modal';
+
 import './Board.css';
 
 export default class Board extends Component {
@@ -11,7 +15,10 @@ export default class Board extends Component {
       title: "",
       description: "",
       bookmarks: [],
-      updatedAt: ""
+      updatedAt: "",
+        owner: false,
+        user: {},
+        isModalOpen: false
     };
   }
   
@@ -25,17 +32,37 @@ export default class Board extends Component {
         api.getBookmarks(this.props.params.id)
       ])
       .then(res => {
-        this.setState({
-          title: res[0].body.title,
-          description: res[0].body.description,
-          bookmarks: res[1].body
-        })
+          console.log('res[0]', res[0].body[0].ownerId);
+
+          this.setState({
+              title: res[0].body[0].title,
+              description: res[0].body[0].description,
+              bookmarks: res[1].body,
+              ownerId: res[0].body[0].ownerId
+          });
       })
+      .then(res => {
+          return auth.userInfo();
+      })
+          .then( (res) => {
+              console.log('res',res);
+
+              this.setState({
+                  user: res
+              });
+
+          })
       .catch(console.error)
   }
 
+
+    openModal = () => this.setState({ isModalOpen: true });
+
+    closeModal = () => this.setState({ isModalOpen: false });
+
   render() {
-    let { bookmarks } = this.state
+    let { bookmarks } = this.state;
+      console.log(this.state.user, this.state.ownerId);
     return (
       <div className="board">
         <ul className="block-grid block-grid-small-1 block-grid-medium-3">
@@ -51,6 +78,12 @@ export default class Board extends Component {
           }
         )}
         </ul>
+          <Modal isOpen={this.state.isModalOpen} onClose={() => this.closeModal()}>
+              <CreateBookmark />
+          </Modal>
+
+
+          {(this.state.user && this.state.user.users_id === this.state.ownerId)? <AddButton clickHandler={this.openModal}/> : null}
       </div>
     );
   }

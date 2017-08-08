@@ -2,20 +2,46 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Menu from './modals/Menu';
 import './App.css';
+import auth from '../auth';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
         isMenuOpen: false,
-        modalIsOpen: false
+        modalIsOpen: false,
+        user: {}
     };
-  }
+      console.log('constructor', this.state)
 
+  }
+    componentWillMount() {
+        this._fetchUserInfo();
+    }
+
+    _fetchUserInfo = () => {
+        console.log('_fetchUserInfo');
+        if (auth.isLoggedIn()) {
+            auth.userInfo()
+                .then(res => {
+                    this.setState({ user: res })
+                })
+                .catch(console.error)
+        }
+        else {
+            this.setState({ error: "Please enter an email and password"})
+        }
+    };
   closeMenu = () => this.setState({ isMenuOpen: false });
   
   render() {
-    let {isMenuOpen} = this.state;
+      // var childrenWithProps = React.Children.map(this.props.children, function (child) {
+      //     return React.cloneElement(child, {
+      //         user: this.state.user
+      //     });
+      // }.bind(this));
+      let {isMenuOpen} = this.state;
+
     return (
       <div className="App">
         <div className="App-navbar">
@@ -26,10 +52,9 @@ class App extends Component {
           <i className="fa fa-cog fa-2x settings-icon"/>
         </div>
 
-        <Menu show={isMenuOpen} closeMenu={this.closeMenu}/>
+        <Menu show={isMenuOpen} closeMenu={this.closeMenu} user={this.state.user}/>
 
         {this.props.children}
-
       </div>
     );
   }

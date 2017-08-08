@@ -15,24 +15,7 @@ class Menu extends Component {
   handleClickOutside = () => {
     this.props.closeMenu();
   }
-    componentWillMount() {
-        this._fetchUserInfo();
-    }
 
-    _fetchUserInfo = () => {
-        console.log('here')
-        // deep destructuring equivalent to (let email = this.refs.email.value;)
-        if (auth.isLoggedIn()) {
-            auth.userInfo()
-                .then(res => {
-                    this.setState({ user: res })
-                })
-                .catch(console.error)
-        }
-        else {
-            this.setState({ error: "Please enter an email and password"})
-        }
-    };
 
   render() {
     let { closeMenu, show } = this.props;
@@ -41,8 +24,8 @@ class Menu extends Component {
       <div className={`menu ${show?"show":""}`}>
 
         <div className="menu__header">
-            {(isLoggedIn && this.state.user) ?
-                <img src={this.state.user.avatarUrl} alt="profile-pic" className="menu__avatar"/>
+            {(isLoggedIn && this.props.user) ?
+                <img src={this.props.user.avatarUrl} alt="profile-pic" className="menu__avatar"/>
                     :  <img src="" alt="profile-pic" className="menu__avatar"/>}
         </div>
 
